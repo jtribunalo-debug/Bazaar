@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../lib/useAuth';
+import { roleLabel } from '../../lib/roles';
 const blank = { name: '', description: '', price: '', category: '', stock: 10 };
 const blankSale = { lines: [], customer: '', method: 'cash', status: 'paid' };
 export default function Admin() {
@@ -53,7 +54,7 @@ export default function Admin() {
   const stats = [['Paid', sum((o) => o.payment_status === 'paid')], ['Unpaid', sum((o) => o.payment_status === 'unpaid')], ['Cash collected', sum((o) => o.payment_status === 'paid' && o.payment_method === 'cash')], ['Online collected', sum((o) => o.payment_status === 'paid' && o.payment_method === 'online')]];
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
   return (<div className="dash">
-    <h1>Dashboard</h1>{msg && <div className="toast" onClick={() => setMsg('')}>{msg}</div>}
+    <h1>Dashboard <span className={'role ' + role}>{roleLabel(role)}</span></h1>{msg && <div className="toast" onClick={() => setMsg('')}>{msg}</div>}
     <div className="stats">{stats.map(([k, v]) => <div className="stat" key={k}><span className="muted sm">{k}</span><b>${v.toFixed(2)}</b></div>)}</div>
     <section className="panel"><h2>{editing ? 'Edit product' : 'Add product'}</h2>
       <div className="form">
