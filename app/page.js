@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../lib/useAuth';
 import { getCart, saveCart } from '../lib/cart';
+import { peso } from '../lib/money';
 import { roleLabel, isStaffRole } from '../lib/roles';
-const money = (n) => '$' + Number(n).toFixed(2);
+const money = peso;
 export default function Store() {
   const router = useRouter(); const { user, role } = useAuth();
   const [products, setProducts] = useState([]); const [q, setQ] = useState(''); const [cat, setCat] = useState('All');
