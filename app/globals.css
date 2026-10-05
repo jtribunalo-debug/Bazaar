@@ -37,3 +37,7 @@ footer{text-align:center;padding:30px;color:var(--mut);font-size:.85rem}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}.stat{background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 18px rgba(0,0,0,.06);display:grid;gap:4px}.stat b{font-size:1.4rem}
 .badge{background:#f1ecea;padding:3px 10px;border-radius:999px;font-size:.8rem;text-transform:capitalize}.badge.paid,.badge.delivered{background:#dff7e6;color:#16793b}.badge.unpaid,.badge.pending{background:#fff1d6;color:#a76500}.badge.cancelled{background:#fde0e0;color:#b00}
 .order{padding:14px 0;border-bottom:1px solid #f0ebe8;display:grid;gap:8px}.order select{width:auto}
+.role{padding:4px 12px;border-radius:999px;font-size:.8rem;font-weight:700;background:#e8f1ff;color:#1a56c4}
+.role.admin{background:linear-gradient(90deg,var(--p),var(--p2));color:#fff}.role.staff{background:#ece4ff;color:#5b2fc4}.who{font-size:.85rem;color:var(--mut)}
+.dash h1 .role{vertical-align:middle;margin-left:8px}
+.staffbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 5vw 0;padding:12px 18px;border-radius:16px;background:#fff0ea}.staffbar.cust{background:#eef5ff}
