@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { supabase } from '../../../lib/supabase';
 import { useAuth } from '../../../lib/useAuth';
 import { getCart, saveCart } from '../../../lib/cart';
+import { peso } from '../../../lib/money';
 const stars = (n) => '★'.repeat(n) + '☆'.repeat(5 - n);
 export default function Product() {
   const { id } = useParams(); const { user } = useAuth();
@@ -30,7 +31,7 @@ export default function Product() {
       <div className="info">
         <span className="pill">{p.category || 'General'}</span><h1>{p.name}</h1>
         <div className="stars">{stars(Math.round(avg))} <span className="muted sm">{reviews.length ? `${avg.toFixed(1)} (${reviews.length})` : 'No reviews yet'}</span></div>
-        <div className="price big">${Number(p.price).toFixed(2)}</div>
+        <div className="price big">{peso(p.price)}</div>
         <p>{p.description}</p>
         <p className={p.stock > 0 ? 'ok' : 'err'}>{p.stock > 0 ? `${p.stock} in stock` : 'Sold out'}</p>
         {p.stock > 0 && <div className="row2"><input type="number" min="1" max={p.stock} value={qty} onChange={(e) => setQty(Math.max(1, Number(e.target.value)))} style={{ width: 90 }} />
