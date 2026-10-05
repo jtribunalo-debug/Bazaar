@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../lib/useAuth';
 import { getCart, saveCart } from '../lib/cart';
+import { roleLabel, isStaffRole } from '../lib/roles';
 const money = (n) => '$' + Number(n).toFixed(2);
 export default function Store() {
-  const router = useRouter(); const { user } = useAuth();
+  const router = useRouter(); const { user, role } = useAuth();
   const [products, setProducts] = useState([]); const [q, setQ] = useState(''); const [cat, setCat] = useState('All');
   const [cart, setCart] = useState({}); const [open, setOpen] = useState(false); const [msg, setMsg] = useState(''); const [pay, setPay] = useState('cash');
   const loadProducts = () => supabase.from('products').select('*').order('created_at', { ascending: false }).then(({ data }) => setProducts(data || []));
@@ -28,6 +29,8 @@ export default function Store() {
     <section className="hero"><h1>Discover amazing deals</h1><p>Millions of reasons to smile — shop trending products today.</p>
       <input className="search" placeholder="Search products…" value={q} onChange={(e) => setQ(e.target.value)} /></section>
     <div className="cats">{cats.map((c) => <button key={c} className={'chip' + (c === cat ? ' on' : '')} onClick={() => setCat(c)}>{c}</button>)}</div>
+    {isStaffRole(role) && <div className="staffbar"><span>You're signed in as <b>{roleLabel(role)}</b> — you can manage the shop.</span><Link href="/admin" className="btn sm">+ Add product</Link></div>}
+    {role === 'buyer' && <div className="staffbar cust"><span>You're signed in as a <b>Customer</b> — browse, buy and track your orders.</span><Link href="/orders" className="btn sm ghost">My orders</Link></div>}
     {msg && <div className="toast" onClick={() => setMsg('')}>{msg}</div>}
     <main className="grid">
       {shown.map((p) => { const cover = p.images?.[0] || p.image_url; return (<article key={p.id} className="card">
