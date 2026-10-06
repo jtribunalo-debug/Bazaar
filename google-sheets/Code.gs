@@ -1,5 +1,5 @@
 // Paste into: your Google Sheet > Extensions > Apps Script
-const SECRET = 'CHANGE_THIS_TO_A_LONG_RANDOM_PASSWORD'; // must equal GOOGLE_SHEET_SECRET in Vercel
+const SECRET = 'Buypartite102026'; // must equal GOOGLE_SHEET_SECRET in Vercel
 const SHEET_NAME = 'Sales';
 const HEADERS = ['Order ID', 'Date', 'Source', 'Customer', 'Items', 'Total (PHP)', 'Payment Method', 'Payment Status', 'Order Status'];
 
