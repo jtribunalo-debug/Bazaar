@@ -42,3 +42,7 @@ export async function POST(req) {
     return NextResponse.json({ ok: true, count: orders.length });
   } catch (e) { return NextResponse.json({ error: e.message }, { status: 500 }); }
 }
+
+export async function GET() {
+  return NextResponse.json({ ok: true, route: 'sheets' });
+}
