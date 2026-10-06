@@ -7,7 +7,7 @@ export default function Header() {
   const { user, role } = useAuth();
   return (
     <header className="hdr">
-      <Link href="/" className="logo">🛍️ Shopora</Link>
+      <Link href="/" className="logo">🛍️ BUYpartite</Link>
       <nav>
         {user && <Link href="/orders" className="pill">My orders</Link>}
         {isStaffRole(role) && <Link href="/admin" className="pill">Dashboard</Link>}

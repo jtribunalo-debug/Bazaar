@@ -45,6 +45,11 @@ export default function Admin() {
     const r = await fetch('/api/staff', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }, body: JSON.stringify(staff) });
     const j = await r.json(); setMsg(r.ok ? '✅ Staff account created' : j.error); if (r.ok) setStaff({ email: '', password: '' });
   }
+  async function syncSheet() {
+    setMsg('Syncing to Google Sheets…');
+    const r = await fetch('/api/sheets', { method: 'POST', headers: { Authorization: 'Bearer ' + token } });
+    const j = await r.json(); setMsg(r.ok ? `✅ Synced ${j.count} order(s) to Google Sheets` : '⚠️ ' + j.error);
+  }
   const addLine = () => { if (!sp) return; setSale({ ...sale, lines: [...sale.lines.filter((l) => l.id !== sp), { id: sp, qty: Number(sq) }] }); setSp(''); setSq(1); };
   async function recordSale() {
     const { error } = await supabase.rpc('place_order', { p_items: sale.lines, p_method: sale.method, p_status: sale.status, p_source: 'in_store', p_customer: sale.customer || null });
@@ -84,7 +89,7 @@ export default function Admin() {
     <section className="panel"><h2>Products ({products.length})</h2>
       {products.map((p) => <div className="line" key={p.id}><span>{(p.images?.[0] || p.image_url) && <img className="th" src={p.images?.[0] || p.image_url} alt="" />} {p.name}</span><span>₱{p.price} · stock {p.stock}</span>
         <span className="row2"><button className="btn ghost sm" onClick={() => edit(p)}>Edit</button><button className="btn ghost sm" onClick={() => del(p.id)}>Delete</button></span></div>)}</section>
-    <section className="panel"><h2>Sales &amp; orders</h2>
+    <section className="panel"><div className="row"><h2>Sales &amp; orders</h2><button className="btn sm" onClick={syncSheet}>📤 Sync to Google Sheets</button></div>
       {orders.map((o) => <div className="order" key={o.id}>
         <div className="row"><span><b>{new Date(o.created_at).toLocaleString()}</b> · <span className="badge">{o.source === 'in_store' ? 'In-store' : 'Website'}</span> · {o.customer_name || emails[o.user_id] || 'Guest'}</span><b>{peso(o.total)}</b></div>
         <div className="muted sm">{o.items.map((i) => `${i.qty}× ${i.name}`).join(', ')}</div>
